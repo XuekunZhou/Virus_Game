@@ -270,8 +270,11 @@ public class VirusGame {
                 }
             }
         }
-        
 
+        // Lol waarom was dit niet geimplementeerd?
+        for (int i = 0; i < algorithms.size(); i++) {
+            System.out.println(algorithms.get(i).getName() + ": " + scores[i]);
+        }
     }
 
     public VirusGame(int fieldSize){

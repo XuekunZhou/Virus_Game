@@ -1,11 +1,10 @@
 import java.util.ArrayList;
+import java.util.Random;
 
-public class StrategyOne implements VirusStrategy{
+public class StrategyNine implements VirusStrategy{
 
     @Override
     public VirusMove doMove(Player currentPlayer, Player[][] playingField, ArrayList<VirusMove> moveList, int FieldSize) {
-
-        moveList.sort(new VirusMoveToComparator());
 
         ArrayList<Result> list = new ArrayList<>();
 
@@ -39,12 +38,21 @@ public class StrategyOne implements VirusStrategy{
             }
         }
 
-        return bestMove.Move;
+        ArrayList<VirusMove> bestMoves = new ArrayList<>();
+        for (Result res : list) {
+            if (res.youGain == bestMove.youGain) {
+                bestMoves.add(res.Move);
+            }
+        }
+
+        Random rand = new Random();
+
+        return bestMoves.get(rand.nextInt(bestMoves.size()));
     }
 
 
     @Override
     public String getName() {
-        return "One";
+        return "Nine";
     }
 }

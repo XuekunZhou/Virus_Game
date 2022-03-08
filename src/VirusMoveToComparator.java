@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class VirusMoveComparator implements Comparator<VirusMove> {
+public class VirusMoveToComparator implements Comparator<VirusMove> {
     @Override
     public int compare(VirusMove o1, VirusMove o2) {
 

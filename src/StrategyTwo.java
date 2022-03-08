@@ -1,32 +1,50 @@
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
 
-public class StrategyTwo implements VirusStrategy {
+public class StrategyTwo implements VirusStrategy{
 
     @Override
     public VirusMove doMove(Player currentPlayer, Player[][] playingField, ArrayList<VirusMove> moveList, int FieldSize) {
 
-        Collections.sort(moveList, new VirusMoveComparator());
+        moveList.sort(new VirusMoveToComparator());
+
+        ArrayList<Result> list = new ArrayList<>();
 
         for (VirusMove move : moveList) {
-            switch ((int) move.to.getX()) {
-                case 1, 3, 5:
-                    int x = (int) (move.to.getX() - move.from.getX());
-                    int y = (int) (move.to.getY() - move.from.getY());
 
-                    if (Math.abs(x) < 2 && Math.abs(y) < 2)
-                        return move;
+            int gain = 1;
+
+            int fromX = (int) move.from.getX();
+            int fromY = (int) move.from.getY();
+            int toX = (int) move.to.getX();
+            int toY = (int) move.to.getY();
+            if (Math.abs(fromX-toX) > 1 || Math.abs(fromY - toY) > 1){
+                gain -= 1;
+            }
+            //take enemy viruses
+            for (int x = toX - 1; x <= toX + 1; x++){
+                for (int y = toY - 1; y <= toY + 1; y++){
+                    if (y >= 0 && x >= 0 && y < FieldSize && x < FieldSize && playingField[x][y] != Player.EMPTY && playingField[x][y] != currentPlayer){
+                        gain++;
+                    }
+                }
+            }
+
+            list.add(new Result(gain, move));
+        }
+
+        Result bestMove = list.get(0);
+        for (Result res : list) {
+            if (res.youGain >= bestMove.youGain) {
+                bestMove = res;
             }
         }
 
-        Random rand = new Random();
-        return moveList.get(rand.nextInt(moveList.size()));
+        return bestMove.Move;
     }
+
 
     @Override
     public String getName() {
         return "Two";
     }
 }
-

@@ -1,11 +1,9 @@
 import java.util.ArrayList;
 
-public class StrategyOne implements VirusStrategy{
+public class StrategySeven implements VirusStrategy{
 
     @Override
     public VirusMove doMove(Player currentPlayer, Player[][] playingField, ArrayList<VirusMove> moveList, int FieldSize) {
-
-        moveList.sort(new VirusMoveToComparator());
 
         ArrayList<Result> list = new ArrayList<>();
 
@@ -45,6 +43,6 @@ public class StrategyOne implements VirusStrategy{
 
     @Override
     public String getName() {
-        return "One";
+        return "Seven";
     }
 }
