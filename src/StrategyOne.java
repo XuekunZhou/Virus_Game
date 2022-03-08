@@ -1,9 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
-public class XueVirusStrategy implements VirusStrategy{
+public class StrategyOne implements VirusStrategy{
     private int greenCount;
     private int redCount;
 
@@ -71,12 +70,6 @@ public class XueVirusStrategy implements VirusStrategy{
             }
         }
 
-        System.out.println(bestMove.Move.from);
-        System.out.println(bestMove.Move.to);
-
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
-
         return bestMove.Move;
     }
 
@@ -95,22 +88,8 @@ public class XueVirusStrategy implements VirusStrategy{
     }
 
 
-//    @Override
-//    public VirusMove doMove(Player currentPlayer, Player[][] playingField, ArrayList<VirusMove> moveList, int FieldSize) {
-//        int i = 0;
-//        for (VirusMove move : moveList)
-//        {
-//            System.out.println(i++ + ": " + move.from + " " + move.to);
-//        }
-//
-//        Scanner scanner = new Scanner(System.in);
-//        int in = scanner.nextInt();
-//
-//        return moveList.get(in);
-//    }
-
     @Override
     public String getName() {
-        return "Xue";
+        return "One";
     }
 }
