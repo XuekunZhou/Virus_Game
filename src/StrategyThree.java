@@ -1,10 +1,13 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class StrategyThree implements VirusStrategy {
 
     @Override
     public VirusMove doMove(Player currentPlayer, Player[][] playingField, ArrayList<VirusMove> moveList, int FieldSize) {
+
+        Collections.sort(moveList, new VirusMoveComparator());
 
         for (VirusMove move : moveList) {
             switch ((int) move.to.getY()) {

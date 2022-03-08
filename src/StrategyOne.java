@@ -3,64 +3,35 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class StrategyOne implements VirusStrategy{
-    private int greenCount;
-    private int redCount;
 
     @Override
     public VirusMove doMove(Player currentPlayer, Player[][] playingField, ArrayList<VirusMove> moveList, int FieldSize) {
 
-        ArrayList<Result> list = new ArrayList<Result>();
-        Count(playingField, FieldSize);
+        moveList.sort(new VirusMoveComparator());
 
-        for (VirusMove move :
-             moveList) {
+        ArrayList<Result> list = new ArrayList<>();
 
-            // copy playing field
-            Player[][] copy = Arrays.stream(playingField).map(Player[]::clone).toArray(Player[][]::new);
+        for (VirusMove move : moveList) {
+
+            int gain = 1;
 
             int fromX = (int) move.from.getX();
             int fromY = (int) move.from.getY();
             int toX = (int) move.to.getX();
             int toY = (int) move.to.getY();
             if (Math.abs(fromX-toX) > 1 || Math.abs(fromY - toY) > 1){
-                playingField[fromX][fromY] = Player.EMPTY;
+                gain -= 1;
             }
-            playingField[toX][toY] = currentPlayer;
             //take enemy viruses
             for (int x = toX - 1; x <= toX + 1; x++){
                 for (int y = toY - 1; y <= toY + 1; y++){
-                    if (y >= 0 && x >= 0 && y < FieldSize && x < FieldSize && playingField[x][y] != Player.EMPTY){
-                        copy[x][y] = currentPlayer;
+                    if (y >= 0 && x >= 0 && y < FieldSize && x < FieldSize && playingField[x][y] != Player.EMPTY && playingField[x][y] != currentPlayer){
+                        gain++;
                     }
                 }
             }
 
-            int red = 0;
-            int green = 0;
-
-            for (int i = 0; i < FieldSize; i++) {
-                for (int j = 0; j < FieldSize; j++) {
-                    if (playingField[i][j] == Player.RED) {
-                        red++;
-                    }
-                    if (playingField[i][j] == Player.GREEN) {
-                        green++;
-                    }
-                }
-            }
-
-            int gains = 0;
-            int redChange = red - redCount;
-            int greenChange = green - greenCount;
-
-            if (currentPlayer == Player.RED) {
-                gains = greenChange - redChange;
-            }
-            if (currentPlayer == Player.GREEN) {
-                gains = redChange - greenChange;
-            }
-
-            list.add(new Result(gains, move));
+            list.add(new Result(gain, move));
         }
 
         Result bestMove = list.get(0);
@@ -68,23 +39,18 @@ public class StrategyOne implements VirusStrategy{
             if (res.youGain > bestMove.youGain) {
                 bestMove = res;
             }
+//            System.out.println(res.Move.from + " to " + res.Move.to + " gains: " +  res.youGain);
         }
+//
+//        System.out.println();
+//        System.out.println("Best move:");
+//        System.out.println(bestMove.Move.from + " to " + bestMove.Move.to + " gains: " +  bestMove.youGain);
+//        System.out.println();
+//
+//        Scanner scanner = new Scanner(System.in);
+//        scanner.nextLine();
 
         return bestMove.Move;
-    }
-
-    private void Count(Player[][] playingField, int FieldSize)
-    {
-        for (int i = 0; i < FieldSize; i++) {
-            for (int j = 0; j < FieldSize; j++) {
-                if (playingField[i][j] == Player.RED) {
-                    redCount ++;
-                }
-                if (playingField[i][j] == Player.GREEN) {
-                    greenCount++;
-                }
-            }
-        }
     }
 
 
