@@ -1,9 +1,9 @@
 public class Result {
     public int youGain;
-    public int enemyLoses;
+    public VirusMove Move;
 
-    public Result(int gain, int loses) {
+    public Result(int gain, VirusMove move) {
         youGain = gain;
-        enemyLoses = loses;
+        Move = move;
     }
 }

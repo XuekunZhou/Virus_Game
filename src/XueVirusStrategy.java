@@ -50,12 +50,34 @@ public class XueVirusStrategy implements VirusStrategy{
                 }
             }
 
-            list.add(new Result())
+            int gains = 0;
+            int redChange = red - redCount;
+            int greenChange = green - greenCount;
 
+            if (currentPlayer == Player.RED) {
+                gains = greenChange - redChange;
+            }
+            if (currentPlayer == Player.GREEN) {
+                gains = redChange - greenChange;
+            }
+
+            list.add(new Result(gains, move));
         }
 
+        Result bestMove = list.get(0);
+        for (Result res : list) {
+            if (res.youGain > bestMove.youGain) {
+                bestMove = res;
+            }
+        }
 
-        return null;
+        System.out.println(bestMove.Move.from);
+        System.out.println(bestMove.Move.to);
+
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+
+        return bestMove.Move;
     }
 
     private void Count(Player[][] playingField, int FieldSize)
