@@ -2,6 +2,16 @@ import java.util.ArrayList;
 
 public class StrategyEight implements VirusStrategy{
 
+    private class Result {
+        public int youGain;
+        public VirusMove Move;
+
+        public Result(int gain, VirusMove move) {
+            youGain = gain;
+            Move = move;
+        }
+    }
+
     @Override
     public VirusMove doMove(Player currentPlayer, Player[][] playingField, ArrayList<VirusMove> moveList, int FieldSize) {
 

@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
         VirusGame game = new VirusGame(7);
-//        game.virusSingleGame(new StrategyThree(), new RandomVirusStrategy());
+        // game.virusSingleGame(new StrategyThree(), new RandomVirusStrategy());
 
         ArrayList<VirusStrategy> strategies = new ArrayList<>();
 
